@@ -18,10 +18,9 @@ npx sequelize db:migrate
 npx sequelize db:seed:all
 ```
 
-# API
+#### Endpoint Route:
 
-Use postman to get data
-http://localhost:9000/api/user/:id
-
-Delete data
-http://localhost:9000/api/user/:id
+| Name              | Endpoint Route                 |
+| ----------------- | ------------------------------ |
+| results user      | http://localhost:9000/user     |
+| delete user       | http://localhost:9000/user/:id |
