@@ -20,6 +20,8 @@ npx sequelize db:seed:all
 
 # API
 
-Use postman to get data and delete data
-http://localhost:9000/api/user
+Use postman to get data
+http://localhost:9000/api/user/:id
+
+Delete data
 http://localhost:9000/api/user/:id
