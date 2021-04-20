@@ -20,7 +20,7 @@ npx sequelize db:seed:all
 
 #### Endpoint Route:
 
-| Name              | Endpoint Route                 |
-| ----------------- | ------------------------------ |
-| results user      | http://localhost:9000/user     |
-| delete user       | http://localhost:9000/user/:id |
+| Name              | Endpoint Route                     |
+| ----------------- | ---------------------------------- |
+| results user      | http://localhost:9000/api/user     |
+| delete user       | http://localhost:9000/api/user/:id |
