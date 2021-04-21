@@ -11,7 +11,6 @@ npm start
 npx sequelize db:create
 
 //creating table
-npx sequelize 
 npx sequelize db:migrate
 
 //populate table with sample data if you want it
