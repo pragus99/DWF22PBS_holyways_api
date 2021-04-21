@@ -1,8 +1,13 @@
-const { user } = require("../models");
+const { User } = require("../models");
 
 exports.getUsers = async (req, res) => {
   try {
-    const dataUser = await user.findAll();
+    const dataUser = await User.findAll({
+      attributes: {
+        exclude: ["createdAt", "updatedAt"],
+      },
+    });
+
     res.send({
       status: "success",
       data: dataUser,
@@ -20,7 +25,7 @@ exports.deleteUser = async (req, res) => {
   try {
     const id = req.params.id;
 
-    const findUser = user.findOne({ where: { id } });
+    const findUser = User.findOne({ where: { id } });
 
     if (!findUser) {
       return res.send({
@@ -28,10 +33,10 @@ exports.deleteUser = async (req, res) => {
         message: "Data not found",
       });
     }
-    await user.destroy({ where: { id } });
+    await User.destroy({ where: { id } });
 
     res.send({
-      status: "Sucessfully delete user",
+      status: "Sucessfully delete User",
       data: { id },
     });
   } catch (error) {

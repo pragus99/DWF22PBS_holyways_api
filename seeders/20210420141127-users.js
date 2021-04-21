@@ -17,14 +17,20 @@ module.exports = {
         {
           fullName: "spiderman",
           email: "spiderman@gmail.com",
+          createdAt: new Date(),
+          updatedAt: new Date(),
         },
         {
           fullName: "Andi",
           email: "andi@kfcsupport.com",
+          createdAt: new Date(),
+          updatedAt: new Date(),
         },
         {
           fullName: "surti",
           email: "surti@gmail.com",
+          createdAt: new Date(),
+          updatedAt: new Date(),
         },
       ],
       {}
