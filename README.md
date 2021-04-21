@@ -11,7 +11,6 @@ npm start
 npx sequelize db:create
 
 //creating table
-npx sequelize 
 npx sequelize db:migrate
 
 //populate table with sample data if you want it
@@ -20,7 +19,7 @@ npx sequelize db:seed:all
 
 #### Endpoint Route:
 
-| Name              | Endpoint Route                     |
-| ----------------- | ---------------------------------- |
-| results user      | http://localhost:9000/api/user     |
-| delete user       | http://localhost:9000/api/user/:id |
+| Name              | Endpoint Route                        |
+| ----------------- | ------------------------------------- |
+| results user      | http://localhost:9000/api/v1/users    |
+| delete user       | http://localhost:9000/api/v1/user/:id |
