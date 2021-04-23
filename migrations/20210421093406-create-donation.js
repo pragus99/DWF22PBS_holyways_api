@@ -1,7 +1,7 @@
 "use strict";
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable("users", {
+    await queryInterface.createTable("donation", {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -14,10 +14,13 @@ module.exports = {
       email: {
         type: Sequelize.STRING,
       },
-      password: {
+      donateAmount: {
+        type: Sequelize.INTEGER,
+      },
+      status: {
         type: Sequelize.STRING,
       },
-      image: {
+      proofAttachment: {
         type: Sequelize.STRING,
       },
       createdAt: {
@@ -31,6 +34,6 @@ module.exports = {
     });
   },
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable("users");
+    await queryInterface.dropTable("donation");
   },
 };
