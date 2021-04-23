@@ -10,7 +10,7 @@ exports.registrasi = async (req, res) => {
 
     const schema = Joi.object({
       fullName: Joi.string().min(3).required(),
-      email: Joi.string().email.min(6).required(),
+      email: Joi.string().email().min(6).required(),
       password: Joi.string().required(),
     });
 
@@ -55,7 +55,7 @@ exports.registrasi = async (req, res) => {
       status: "Success",
       data: {
         user: {
-          fullName: dataUser.name,
+          fullName: dataUser.fullName,
           token,
         },
       },
