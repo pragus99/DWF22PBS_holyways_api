@@ -5,7 +5,7 @@ exports.getFunds = async (req, res) => {
   try {
     const path = process.env.PATH_KEY;
 
-    const funds = await Fund.findAll({
+    const dataFunds = await Fund.findAll({
       include: [
         {
           model: UsersDonate,
@@ -18,9 +18,9 @@ exports.getFunds = async (req, res) => {
       exclude: ["createdAt", "updatedAt"],
     });
 
-    const parseJSON = JSON.parse(JSON.stringify(funds));
+    const parseJSON = JSON.parse(JSON.stringify(dataFunds));
 
-    funds = parseJSON.map((content) => {
+    dataFunds = parseJSON.map((content) => {
       return {
         ...content,
         image: path + item.image,
@@ -29,7 +29,7 @@ exports.getFunds = async (req, res) => {
 
     res.status(200).send({
       status: "success",
-      data: { funds: funds },
+      data: { funds: dataFunds },
     });
   } catch (error) {
     console.log(error);
@@ -44,7 +44,7 @@ exports.getFundsDetail = async (req, res) => {
   const { id } = req.params;
 
   try {
-    const fund = await Fund.findOne({
+    const dataFund = await Fund.findOne({
       where: {
         id,
       },
@@ -60,7 +60,7 @@ exports.getFundsDetail = async (req, res) => {
     });
     res.status(200).send({
       status: "success",
-      data: { fund: fund },
+      data: { fund: dataFund },
     });
   } catch (error) {
     console.log(error);
@@ -76,7 +76,7 @@ exports.createFund = async (req, res) => {
     const { title, goal, description } = req.body;
     const thumbnail = req.files.imageFile[0].filename;
 
-    const fund = await Fund.create({
+    const dataFund = await Fund.create({
       title,
       thumbnail,
       goal,
@@ -85,7 +85,7 @@ exports.createFund = async (req, res) => {
 
     res.status(200).send({
       status: "success",
-      data: { fund: fund },
+      data: { fund: dataFund },
     });
   } catch (error) {
     console.log(error);
@@ -99,8 +99,7 @@ exports.createFund = async (req, res) => {
 exports.updateFund = async (req, res) => {
   try {
     const { id } = req.params;
-    const fund = req.body;
-    const thumbnail = req.files.imageFile[0].filename;
+    const dataFund = req.body;
 
     const findFund = Fund.findOne({
       where: { id },
@@ -114,7 +113,7 @@ exports.updateFund = async (req, res) => {
       });
     }
 
-    await Fund.update(fund, {
+    await Fund.update(dataFund, {
       where: { id },
     });
 

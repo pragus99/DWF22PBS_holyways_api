@@ -1,25 +1,13 @@
 const { User } = require("../models");
-const Joi = require("joi");
 
 exports.getUsers = async (req, res) => {
   // access global path
-  const path = process.env.IMG_PATH;
 
   try {
     const dataUser = await User.findAll({
       attributes: {
         exclude: ["createdAt", "updatedAt", "password"],
       },
-    });
-
-    // data database di ubah ke format JSON lalu di parsing
-    const parseJSON = JSON.parse(JSON.stringify(dataUser));
-
-    data = parseJSON.map((data) => {
-      return {
-        ...data,
-        image: path + data.image,
-      };
     });
 
     res.status(200).send({
