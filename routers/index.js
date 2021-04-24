@@ -6,8 +6,8 @@ const { auth } = require("../middleware/auth");
 const { upload } = require("../middleware/upload");
 
 const { getUsers, deleteUser } = require("../controllers/UserController");
-router.get("/users", auth, getUsers);
-router.delete("/user/:id", auth, deleteUser);
+router.get("/users", getUsers);
+router.delete("/user/:id", deleteUser);
 
 const {
   getFunds,
