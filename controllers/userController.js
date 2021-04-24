@@ -41,65 +41,65 @@ exports.getUsers = async (req, res) => {
   }
 };
 
-exports.updateUser = async (req, res) => {
-  try {
-    const id = req.userId;
-    const data = req.body;
+// exports.updateUser = async (req, res) => {
+//   try {
+//     const id = req.userId;
+//     const data = req.body;
 
-    const dataUser = await User.findOne({
-      where: {
-        id,
-      },
-      attributes: {
-        exclude: ["updatedAt", "createdAt", "password"],
-      },
-    });
+//     const dataUser = await User.findOne({
+//       where: {
+//         id,
+//       },
+//       attributes: {
+//         exclude: ["updatedAt", "createdAt", "password"],
+//       },
+//     });
 
-    if (!dataUser) {
-      return res.send({
-        status: "Error",
-        message: "User doesn't exist",
-      });
-    }
+//     if (!dataUser) {
+//       return res.send({
+//         status: "Error",
+//         message: "User doesn't exist",
+//       });
+//     }
 
-    const schema = Joi.object({
-      fullName: Joi.string().min(3),
-      email: Joi.string().email(),
-    });
+//     const schema = Joi.object({
+//       fullName: Joi.string().min(3),
+//       email: Joi.string().email(),
+//     });
 
-    const { error } = schema.validate(data);
-    if (error) {
-      return res.send({
-        status: "Error",
-        message: error,
-      });
-    }
+//     const { error } = schema.validate(data);
+//     if (error) {
+//       return res.send({
+//         status: "Error",
+//         message: error,
+//       });
+//     }
 
-    const path = process.env.IMG_PATH;
-    const image = req.files.imageFile[0].filename;
+//     const path = process.env.IMG_PATH;
+//     const image = req.files.imageFile[0].filename;
 
-    const dataUpdated = {
-      ...data,
-      image,
-    };
+//     const dataUpdated = {
+//       ...data,
+//       image,
+//     };
 
-    await user.update(dataUpdated, {
-      where: { id },
-    });
+//     await user.update(dataUpdated, {
+//       where: { id },
+//     });
 
-    res.status(200).send({
-      status: "success",
-      message: "update success",
-      data: { user: { ...dataUpdated, image: path + image } },
-    });
-  } catch (error) {
-    console.log(error);
-    res.status(500).send({
-      status: "failed",
-      message: "server error",
-    });
-  }
-};
+//     res.status(200).send({
+//       status: "success",
+//       message: "update success",
+//       data: { user: { ...dataUpdated, image: path + image } },
+//     });
+//   } catch (error) {
+//     console.log(error);
+//     res.status(500).send({
+//       status: "failed",
+//       message: "server error",
+//     });
+//   }
+// };
 
 exports.deleteUser = async (req, res) => {
   try {

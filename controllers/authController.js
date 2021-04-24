@@ -10,7 +10,7 @@ exports.registrasi = async (req, res) => {
 
     const schema = Joi.object({
       fullName: Joi.string().min(3).required(),
-      email: Joi.string().email.min(6).required(),
+      email: Joi.string().email().min(6).required(),
       password: Joi.string().required(),
     });
 
@@ -19,7 +19,7 @@ exports.registrasi = async (req, res) => {
     if (error) {
       return res.send({
         status: "Validation Failed",
-        message: error,
+        message: error.details[0].message,
       });
     }
 
@@ -55,7 +55,7 @@ exports.registrasi = async (req, res) => {
       status: "Success",
       data: {
         user: {
-          fullName: dataUser.name,
+          fullName: dataUser.fullName,
           token,
         },
       },
@@ -83,11 +83,11 @@ exports.login = async (req, res) => {
     if (error) {
       return res.send({
         status: "Validation failed",
-        message: error,
+        message: error.details[0].message,
       });
     }
 
-    const checkEmail = await user.findOne({
+    const checkEmail = await User.findOne({
       where: {
         email,
       },

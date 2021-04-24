@@ -1,6 +1,6 @@
 const multer = require("multer");
 
-exports.uploadFile = (imageFile, videoFile) => {
+exports.upload = (imageFile, videoFile) => {
   //initialisasi multer diskstorage
   //menentukan destionation file diupload
   //menentukan nama file (rename agar tidak ada nama file ganda)
@@ -31,7 +31,7 @@ exports.uploadFile = (imageFile, videoFile) => {
   const maxSize = sizeInMB * 1000 * 1000; //Maximum file size i MB
 
   //eksekusi upload multer dan tentukan disk storage, validation dan maxfile size
-  const upload = multer({
+  const uploadfile = multer({
     storage,
     fileFilter,
     limits: {
