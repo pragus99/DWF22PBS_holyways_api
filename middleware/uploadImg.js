@@ -1,13 +1,13 @@
 const multer = require("multer");
 
-exports.upload = (imageFile, videoFile) => {
+exports.uploadImg = (imageFile, videoFile) => {
   //initialisasi multer diskstorage
   //menentukan destionation file diupload
   //menentukan nama file (rename agar tidak ada nama file ganda)
   const fileName = "";
   const storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, "../storage"); //lokasi penyimpan file
+      cb(null, "storage"); //lokasi penyimpan file
     },
     filename: function (req, file, cb) {
       cb(null, Date.now() + "-" + file.originalname.replace(/\s/g, "")); //rename nama file by date now + nama original
@@ -24,6 +24,15 @@ exports.upload = (imageFile, videoFile) => {
         return cb(new Error("Only image files are allowed!"), false);
       }
     }
+
+    if (file.fieldname === videoFile) {
+      if (!file.originalname.match(/\.(mp4|mkv)$/)) {
+        req.fileValidationError = {
+          message: "Only Video files are allowed!",
+        };
+        return cb(new Error("Only Video files are allowed!"), false);
+      }
+    }
     cb(null, true);
   };
 
@@ -31,13 +40,22 @@ exports.upload = (imageFile, videoFile) => {
   const maxSize = sizeInMB * 1000 * 1000; //Maximum file size i MB
 
   //eksekusi upload multer dan tentukan disk storage, validation dan maxfile size
-  const uploadfile = multer({
+  const upload = multer({
     storage,
     fileFilter,
     limits: {
       fileSize: maxSize,
     },
-  }).single(imageFile);
+  }).fields([
+    {
+      name: imageFile,
+      maxCount: 1,
+    },
+    {
+      name: videoFile,
+      maxCount: 1,
+    },
+  ]); //fields digunakan karena file yang diupload lebih dari 1 fields
 
   //middleware handler
   return (req, res, next) => {
@@ -47,10 +65,10 @@ exports.upload = (imageFile, videoFile) => {
         return res.status(400).send(req.fileValidationError);
 
       //munculkan error jika file tidak disediakan
-      if (!req.files && !err)
-        return res.status(400).send({
-          message: "Please select files to upload",
-        });
+      // if (!req.files && !err)
+      //   return res.status(400).send({
+      //     message: "Please select files to upload",
+      //   });
 
       //munculkan error jika melebihi max size
       if (err) {

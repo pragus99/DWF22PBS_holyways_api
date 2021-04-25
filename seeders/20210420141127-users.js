@@ -12,23 +12,71 @@ module.exports = {
      * }], {});
      */
     await queryInterface.bulkInsert(
-      "Users",
+      "UsersDonates",
       [
         {
-          fullName: "spiderman",
-          email: "spiderman@gmail.com",
+          userId: "2",
+          fundId: "1",
+          fullName: "Dul",
+          email: "dul@gmail.com",
+          donateAmount: 25000,
+          status: "pending",
+          proofAttachment: "lalalallaal.png",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          fullName: "Andi",
-          email: "andi@kfcsupport.com",
+          userId: "3",
+          fundId: "1",
+          fullName: "Oli",
+          email: "oli@gmail.com",
+          donateAmount: 90000,
+          status: "pending",
+          proofAttachment: "lwe222222.png",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          fullName: "surti",
-          email: "surti@gmail.com",
+          userId: "4",
+          fundId: "1",
+          fullName: "Solar",
+          email: "solar@gmail.com",
+          donateAmount: 45000,
+          status: "pending",
+          proofAttachment: "vcvclaew.png",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          userId: "2",
+          fundId: "2",
+          fullName: "Dul",
+          email: "dul@gmail.com",
+          donateAmount: 1000,
+          status: "pending",
+          proofAttachment: "bvbvbvbvl.png",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          userId: "4",
+          fundId: "2",
+          fullName: "Solar",
+          email: "solar@gmail.com",
+          donateAmount: 500,
+          status: "pending",
+          proofAttachment: "21weaal.png",
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+        {
+          userId: "4",
+          fundId: "4",
+          fullName: "Solar",
+          email: "solar@gmail.com",
+          donateAmount: 80000,
+          status: "pending",
+          proofAttachment: "pioilald.png",
           createdAt: new Date(),
           updatedAt: new Date(),
         },
@@ -43,6 +91,6 @@ module.exports = {
      *
      * Example:
      */
-    await queryInterface.bulkDelete("Users", null, {});
+    await queryInterface.bulkDelete("UsersDonates", null, {});
   },
 };

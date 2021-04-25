@@ -1,4 +1,6 @@
 const { User } = require("../models");
+const fs = require("fs");
+const Joi = require("joi");
 
 exports.getUsers = async (req, res) => {
   // access global path
@@ -12,13 +14,7 @@ exports.getUsers = async (req, res) => {
 
     res.status(200).send({
       status: "success",
-      data: {
-        users: {
-          id: dataUser.id,
-          fullName: dataUser.fullName,
-          email: dataUser.email,
-        },
-      },
+      data: { users: dataUser },
     });
   } catch (error) {
     console.log(error);
@@ -29,65 +25,79 @@ exports.getUsers = async (req, res) => {
   }
 };
 
-// exports.updateUser = async (req, res) => {
-//   try {
-//     const id = req.userId;
-//     const data = req.body;
+exports.updateUser = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const body = req.body;
 
-//     const dataUser = await User.findOne({
-//       where: {
-//         id,
-//       },
-//       attributes: {
-//         exclude: ["updatedAt", "createdAt", "password"],
-//       },
-//     });
+    const findUser = await User.findOne({ where: { id } });
 
-//     if (!dataUser) {
-//       return res.send({
-//         status: "Error",
-//         message: "User doesn't exist",
-//       });
-//     }
+    if (!findUser) {
+      return res.send({
+        status: "Error",
+        message: "User doesn't exist",
+      });
+    }
 
-//     const schema = Joi.object({
-//       fullName: Joi.string().min(3),
-//       email: Joi.string().email(),
-//     });
+    const schema = Joi.object({
+      fullName: Joi.string().min(3),
+      email: Joi.string().email(),
+    });
 
-//     const { error } = schema.validate(data);
-//     if (error) {
-//       return res.send({
-//         status: "Error",
-//         message: error,
-//       });
-//     }
+    const { error } = schema.validate(body);
+    if (error) {
+      return res.send({
+        status: "Error",
+        message: error,
+      });
+    }
 
-//     const path = process.env.IMG_PATH;
-//     const image = req.files.imageFile[0].filename;
+    if (req.files) {
+      var avatar = req.files.avatar[0].filename;
 
-//     const dataUpdated = {
-//       ...data,
-//       image,
-//     };
+      fs.stat(`storage/${findUser.avatar}`, function (err, stats) {
+        if (err) {
+          return console.log(error);
+        }
 
-//     await user.update(dataUpdated, {
-//       where: { id },
-//     });
+        fs.unlink(`storage/${findUser.avatar}`, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
+      });
+    }
 
-//     res.status(200).send({
-//       status: "success",
-//       message: "update success",
-//       data: { user: { ...dataUpdated, image: path + image } },
-//     });
-//   } catch (error) {
-//     console.log(error);
-//     res.status(500).send({
-//       status: "failed",
-//       message: "server error",
-//     });
-//   }
-// };
+    const dataUpdated = {
+      ...body,
+      avatar,
+    };
+
+    await User.update(dataUpdated, {
+      where: { id },
+    });
+
+    const updateUser = await User.findOne({
+      where: {
+        id,
+      },
+      attributes: {
+        exclude: ["updatedAt", "createdAt", "password"],
+      },
+    });
+
+    res.status(200).send({
+      status: "success",
+      data: { user: updateUser },
+    });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({
+      status: "failed",
+      message: "server error",
+    });
+  }
+};
 
 exports.deleteUser = async (req, res) => {
   try {
