@@ -198,9 +198,10 @@ exports.deleteFund = async (req, res) => {
 exports.updateUsersDonate = async (req, res) => {
   try {
     const { fundid, userid } = req.params;
+    const { status } = req.body;
 
     const dataDonate = {
-      ...req.body,
+      status,
     };
 
     await UsersDonate.update(dataDonate, {

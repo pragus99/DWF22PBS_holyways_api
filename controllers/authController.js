@@ -14,7 +14,7 @@ exports.registrasi = async (req, res) => {
       password: Joi.string().required(),
     });
 
-    const { error } = schema.validate(req.body);
+    const { error } = schema.validate(data);
 
     if (error) {
       return res.send({
@@ -92,6 +92,7 @@ exports.login = async (req, res) => {
         email,
       },
     });
+
     if (!checkEmail) {
       return res.send({
         status: "Login failed",

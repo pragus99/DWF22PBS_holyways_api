@@ -103,7 +103,7 @@ exports.deleteUser = async (req, res) => {
   try {
     const id = req.params.id;
 
-    const findUser = User.findOne({ where: { id } });
+    const findUser = await User.findOne({ where: { id } });
 
     if (!findUser) {
       return res.send({
