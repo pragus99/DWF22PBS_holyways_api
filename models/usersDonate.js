@@ -24,8 +24,6 @@ module.exports = (sequelize, DataTypes) => {
   }
   UsersDonate.init(
     {
-      fullName: DataTypes.STRING,
-      email: DataTypes.STRING,
       donateAmount: DataTypes.INTEGER,
       status: DataTypes.STRING,
       proofAttachment: DataTypes.STRING,

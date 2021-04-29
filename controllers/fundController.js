@@ -1,4 +1,4 @@
-const { Fund, UsersDonate } = require("../models");
+const { Fund, UsersDonate, User } = require("../models");
 const fs = require("fs");
 
 exports.getFunds = async (req, res) => {
@@ -198,24 +198,31 @@ exports.deleteFund = async (req, res) => {
 exports.updateUsersDonate = async (req, res) => {
   try {
     const { fundid, userid } = req.params;
-    const { status } = req.body;
+    const { id, status } = req.body;
 
     const dataDonate = {
       status,
     };
 
     await UsersDonate.update(dataDonate, {
-      where: { id: userid },
+      where: { id },
     });
 
     const updateFund = await Fund.findOne({
       where: { id: fundid },
+      attributes: {
+        exclude: ["createdAt", "updatedAt", "userId"],
+      },
+    });
+
+    const updateDonate = await UsersDonate.findAll({
+      where: { fundid },
       include: [
         {
-          model: UsersDonate,
-          as: "usersDonate",
+          model: User,
+          as: "user",
           attributes: {
-            exclude: ["createdAt", "updatedAt", "fundId", "userId"],
+            exclude: ["createdAt", "updatedAt", "id", "password", "avatar"],
           },
         },
       ],
@@ -226,7 +233,10 @@ exports.updateUsersDonate = async (req, res) => {
 
     res.status(200).send({
       status: "Success",
-      data: updateFund,
+      data: {
+        fund: updateFund,
+        usersdonate: updateDonate,
+      },
     });
   } catch (error) {
     console.log(error);

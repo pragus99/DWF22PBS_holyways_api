@@ -17,8 +17,6 @@ module.exports = {
         {
           userId: "1",
           fundId: "1",
-          fullName: "Ada",
-          email: "ada@gmail.com",
           donateAmount: 25000,
           status: "pending",
           proofAttachment: "lalalallaal.png",
@@ -28,8 +26,6 @@ module.exports = {
         {
           userId: "2",
           fundId: "1",
-          fullName: "ade",
-          email: "ade@gmail.com",
           donateAmount: 90000,
           status: "pending",
           proofAttachment: "lwe222222.png",
@@ -39,8 +35,6 @@ module.exports = {
         {
           userId: "3",
           fundId: "1",
-          fullName: "adi",
-          email: "adi@gmail.com",
           donateAmount: 45000,
           status: "pending",
           proofAttachment: "vcvclaew.png",
@@ -50,8 +44,6 @@ module.exports = {
         {
           userId: "2",
           fundId: "2",
-          fullName: "ade",
-          email: "ade@gmail.com",
           donateAmount: 1000,
           status: "pending",
           proofAttachment: "bvbvbvbvl.png",
@@ -61,8 +53,6 @@ module.exports = {
         {
           userId: "3",
           fundId: "2",
-          fullName: "adi",
-          email: "adi@gmail.com",
           donateAmount: 500,
           status: "pending",
           proofAttachment: "21weaal.png",

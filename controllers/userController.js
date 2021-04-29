@@ -3,8 +3,6 @@ const fs = require("fs");
 const Joi = require("joi");
 
 exports.getUsers = async (req, res) => {
-  // access global path
-
   try {
     const dataUser = await User.findAll({
       attributes: {
